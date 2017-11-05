@@ -939,8 +939,8 @@ class InstagramAPI:
             self.getUserFollowers(usernameId,next_max_id)
             temp = self.LastJson
 
-            for item in temp["users"]:
-                followers.append(item)
+            if temp["users"]:
+                followers.extend(temp["users"])
 
             if temp["big_list"] == False:
                 return followers            
@@ -953,8 +953,8 @@ class InstagramAPI:
             self.getUserFollowings(usernameId,next_max_id)
             temp = self.LastJson
 
-            for item in temp["users"]:
-                followers.append(item)
+            if temp["users"]:
+                followers.extend(temp["users"])
 
             if temp["big_list"] == False:
                 return followers            
@@ -966,8 +966,8 @@ class InstagramAPI:
         while 1:
             self.getUserFeed(usernameId, next_max_id, minTimestamp)
             temp = self.LastJson
-            for item in temp["items"]:
-                user_feed.append(item)
+            if temp["items"]:
+                user_feed.extend(temp["items"])
             if temp["more_available"] == False:
                 return user_feed
             next_max_id = temp["next_max_id"]
@@ -989,8 +989,8 @@ class InstagramAPI:
             temp = self.LastJson
             try:
                 next_id = temp["next_max_id"]
-                for item in temp["items"]:
-                    liked_items.append(item)
+                if temp["items"]:
+                    liked_items.extend(temp["items"])
             except KeyError as e:
                 break
         return liked_items
